@@ -1,6 +1,7 @@
+import { Cabin } from '../utils/types';
 import supabase from './supabase';
 
-export async function getCabins() {
+export async function getCabins(): Promise<Cabin[]> {
   const { data, error } = await supabase.from('cabins').select('*');
 
   if (error) {
