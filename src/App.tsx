@@ -18,7 +18,7 @@ import GlobalStyles from './styles/GlobalStyles';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000,
+      staleTime: 0,
     },
   },
 });
