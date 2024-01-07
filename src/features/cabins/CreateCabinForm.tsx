@@ -33,7 +33,7 @@ function CreateCabinForm({ cabinToEdit }: CreateCabinFormProps) {
   } = useForm({
     defaultValues: cabinToEdit,
   });
-  const { createCabin, isCreating } = useCreateCabin(reset);
+  const { createCabin, isCreating } = useCreateCabin();
   const { editCabin, isEditing } = useEditCabin();
   const isWorking = isCreating || isEditing;
 
@@ -43,7 +43,13 @@ function CreateCabinForm({ cabinToEdit }: CreateCabinFormProps) {
   function onSubmit(data: FieldValues) {
     const image = typeof data.image === 'string' ? data.image : data.image[0];
 
-    if (!isEditSession) createCabin({ ...data, image: data.image[0] });
+    if (!isEditSession)
+      createCabin(
+        { ...data, image: data.image[0] },
+        {
+          onSuccess: () => reset(),
+        }
+      );
 
     if (isEditSession && id)
       editCabin(
