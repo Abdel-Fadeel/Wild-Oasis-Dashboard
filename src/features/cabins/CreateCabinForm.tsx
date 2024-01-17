@@ -21,9 +21,10 @@ const FormButtonsRow = styled.div`
 
 type CreateCabinFormProps = {
   cabinToEdit?: Cabin;
+  onCloseModal?: () => void;
 };
 
-function CreateCabinForm({ cabinToEdit }: CreateCabinFormProps) {
+function CreateCabinForm({ cabinToEdit, onCloseModal }: CreateCabinFormProps) {
   const {
     register,
     handleSubmit,
@@ -47,7 +48,10 @@ function CreateCabinForm({ cabinToEdit }: CreateCabinFormProps) {
       createCabin(
         { ...data, image: data.image[0] },
         {
-          onSuccess: () => reset(),
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
         }
       );
 
@@ -61,13 +65,19 @@ function CreateCabinForm({ cabinToEdit }: CreateCabinFormProps) {
           id,
         },
         {
-          onSuccess: () => reset(),
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
         }
       );
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      type={onCloseModal ? 'modal' : 'regular'}
+    >
       <FormRow label='Cabin name' error={errors.name?.message as string}>
         <Input
           type='text'
@@ -162,7 +172,11 @@ function CreateCabinForm({ cabinToEdit }: CreateCabinFormProps) {
         />
       </FormRow>
       <FormButtonsRow>
-        <Button variation='secondary' type='reset'>
+        <Button
+          variation='secondary'
+          type='reset'
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isWorking}>
