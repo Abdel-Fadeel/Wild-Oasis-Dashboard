@@ -111,7 +111,7 @@ function Window({ children, name }: WindowProps) {
 
   return createPortal(
     <Overlay>
-      <StyledModal ref={ref}>
+      <StyledModal ref={ref as React.RefObject<HTMLDivElement>}>
         <Button onClick={close}>
           <HiXMark />
         </Button>
