@@ -14,3 +14,8 @@ export type Settings = {
   maxGuestsPerBooking: number;
   breakfastPrice: number;
 };
+
+export type Option = {
+  label: string;
+  value: string;
+};
